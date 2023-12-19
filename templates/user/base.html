@@ -1,0 +1,369 @@
+{% load static %}
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Watch shop | eCommers</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+
+
+    <script type="text/javascript">
+        var user = '{{request.user}}';
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/4.1.0/cropper.min.css" integrity="sha512-vmXqikRa5kmI3gOQygzml5nV+5NGxG8rt8KWHKj8JYYK12JUl2L8RBfWinFGTzvpwwsIRcINy9mhLyodnmzjig==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/4.1.0/cropper.min.js" integrity="sha512-E+gDQcIvNXE60SjCS38ysf1mGh4ObBpKcUOp0oEaHQHQAdaN2p7GelOpgEdpTuCLoIJyLkNXiqFZbyD9Ak/Ygw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        
+        .badge {
+            padding-left: 9px;
+            padding-right: 9px;
+            -webkit-border-radius: 9px;
+            -moz-border-radius: 9px;
+            border-radius: 9px;
+          }
+          
+          .label-warning[href],
+          .badge-warning[href] {
+            background-color: #c67605;
+          }
+          #lblCartCount {
+                top: 24px;
+    position: relative;
+    left: -18px;
+              font-size: 12px;
+              background: #ff0000;
+              color: #fff;
+              padding: 0 5px;
+              vertical-align: top;
+              margin-left: -10px; 
+          }
+    </style>
+    <style>
+        .body{
+            overflow-x: hidden !important;
+        }
+        .slideshow-items {
+            width: 500px;
+          }
+          .slideshow-thumbnails {
+            width: 100px;
+          }
+          #slideshow-items-container { display: inline-block; position: relative; }
+          
+          #lens { background-color: rgba( 233, 233, 233, 0.4 ) }
+          #lens, #result { position: absolute; display: none; z-index: 1; }
+          .slideshow-items { display: none; }
+          .slideshow-items.active { display: block; }
+          .slideshow-thumbnails { opacity: 0.5; }
+          .slideshow-thumbnails.active { opacity: 1; }
+          #lens, .slideshow-items, .slideshow-thumbnails, #result { border: solid var(--light-grey-2) 1px; }
+          
+    </style>
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    
+</head>
+
+<body class="body">
+    <!--? Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="{% static 'assets/img/logo/logo.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader Start -->
+    <header>
+
+        
+
+
+
+        <!-- Header Start -->
+        <div class="header-area">
+            <div class="main-header header-sticky">
+                <div class="container-fluid">
+                    <div class="menu-wrapper">
+                        <!-- Logo -->
+                        <div class="logo">
+                            <a href="/"><img src="{% static 'assets/img/logo/logo.png' %}" alt=""></a>
+                        </div>
+                        <!-- Main-menu -->
+                        <div class="main-menu d-none d-lg-block">
+                            <nav>                                                
+                                <ul id="navigation">  
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="/shop">shop</a></li>
+                                    <li><a href="/about">about</a></li>
+                                    <li class="hot"><a href="/shop">Latest</a>
+                                        <ul class="submenu">
+                                            <li><a href="/shop"> Product list</a></li>
+                                            
+                                        </ul>
+                                    </li>
+                                   
+                                    <li><a href="#">Pages</a>
+                                        <ul class="submenu">
+                                            <li><a href="{% url 'user_login' %}">Login</a></li>
+                                            <li><a href="{% url 'user_signup' %}">SignUp</a></li>
+                                            <li><a href="{% url 'cart' %}">Cart</a></li>
+                                            <li><a href="{% url 'wishlist' %}">WishList</a></li>
+                                            <li><a href="{% url 'order-summary' %}">Order Summary</a></li>
+                                            <li><a href="{% url 'placeorder' %}">Product Checkout</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="/contact">Contact</a></li>
+                                    <li class="responsive-right-navbar">
+                                        
+                                            <a>User</a>
+                                            <ul style="display:flex;">
+                                                <li>
+                                                    <div >
+                                                        <div class="">
+                                                            <a class="refresh-num_of_items" href="{% url 'cart' %}">
+                                                            <span class="fa fa-shopping-cart ">
+                                                                
+                                                            </span>
+                                                            <span class='badge badge-warning cart-lg-logo' id='lblCartCounts'> {{num_of_items}} </span>
+                                                        </a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                {% if user.is_authenticated  %}
+                                                {% if not user.is_superuser %}
+                                                <li> <a href="{% url 'user_edit' %}"><span class="fa fa-user"></span></a></li>
+                                            </ul> 
+                                            <li class="responsive-right-navbar-username"> <a href=""><span class="">{{user.username}}</span></a></li>
+                                           
+                                            <li class="responsive-right-navbar-username"> <a href="{% url 'user_logout' %}"><span style="padding:20px 19px;" class="btn btn-secondary">Logout</span></a></li>
+                                            {% endif %}
+                                            {% endif %}
+                                        
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!-- Header Right -->
+                        <div class="header-right responsive-right">
+                            <ul style="align-items:center">
+                                
+                               
+                                <li>
+                                    <div >
+                                    {% include 'cart/menu_cart.html' %}
+                                </div>
+                                </li>
+                                {% if user.is_authenticated  %}
+                                {% if not user.is_superuser %}
+                                <li> <a href="{% url 'user_edit' %}"><span class="">{{user.username}}</span></a></li>
+                                <li> <a href="{% url 'user_edit' %}"><span class="fa fa-user"></span></a></li>
+                                <li> <a href="{% url 'user_logout' %}"><span style="padding:20px 19px;" class="btn btn-secondary">Logout</span></a></li>
+                                {% endif %}
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Mobile Menu -->
+                    <div class="col-12">
+                        <div class="mobile_menu d-block d-lg-none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header End -->
+    </header>
+
+    {% block content %}
+
+
+    
+
+
+
+
+
+
+    {% endblock %}
+
+
+
+
+    <footer>
+        <!-- Footer Start-->
+        <div class="footer-area footer-padding">
+            <div class="container">
+                <div class="row d-flex justify-content-between">
+                    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
+                        <div class="single-footer-caption mb-50">
+                            <div class="single-footer-caption mb-30">
+                                <!-- logo -->
+                                <div class="footer-logo">
+                                    <a href="index.html"><img src="{% static 'assets/img/logo/logo2_footer.png' %}" alt=""></a>
+                                </div>
+                                <div class="footer-tittle">
+                                    <div class="footer-pera">
+                                        <p>Asorem ipsum adipolor sdit amet, consectetur adipisicing elitcf sed do eiusmod tem.</p>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-5">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Quick Links</h4>
+                                <ul>
+                                    <li><a href="/about">About</a></li>
+                                    <li><a href="#"> Offers & Discounts</a></li>
+                                    <li><a href="#"> Get Coupon</a></li>
+                                    <li><a href="/contact">  Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-7">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>New Products</h4>
+                                <ul>
+                                    <li><a href="/shop">Woman Accessories</a></li>
+                                    <li><a href="/shop">Fashion Accessories</a></li>
+                                    <li><a href="/shop"> Man Accessories</a></li>
+                                    <li><a href="/shop">Kids Accessories</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Support</h4>
+                                <ul>
+                                    <li><a href="#">Frequently Asked Questions</a></li>
+                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Report a Payment Issue</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer bottom -->
+                <div class="row align-items-center">
+                    <div class="col-xl-7 col-lg-8 col-md-7">
+                       
+                    </div>
+                    <div class="col-xl-5 col-lg-4 col-md-5">
+                        <div class="footer-copy-right f-right">
+                            <!-- social -->
+                            <div class="footer-social">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-behance"></i></a>
+                                <a href="#"><i class="fas fa-globe"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End-->
+    </footer>
+    <!--? Search model Begin -->
+    <div class="search-model-box">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-btn">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Searching key.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search model end -->
+    <!--Alertify JS-->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script>
+        {% for msg in messages %}
+            alertify.success('{{msg}}')
+        {% endfor %}
+        
+         
+    </script>
+    <!-- JS here -->
+   
+
+    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{% static './assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="{% static './assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static './assets/js/popper.min.js' %}"></script>
+    <script src="{% static './assets/js/bootstrap.min.js' %}"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="{% static './assets/js/jquery.slicknav.min.js' %}"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="{% static './assets/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static './assets/js/slick.min.js' %}"></script>
+
+    <!-- One Page, Animated-HeadLin -->
+    <script src="{% static './assets/js/wow.min.js' %}"></script>
+    <script src="{% static './assets/js/animated.headline.js'%}"></script>
+    <script src="{% static './assets/js/jquery.magnific-popup.js'%}"></script>
+
+    <!-- Scrollup, nice-select, sticky -->
+    <script src="{% static './assets/js/jquery.scrollUp.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static './assets/js/jquery.sticky.js' %}"></script>
+    
+    <!-- contact js -->
+    <script src="{% static './assets/js/contact.js' %}"></script>
+    <script src="{% static './assets/js/jquery.form.js' %}"></script>
+    <script src="{% static './assets/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static './assets/js/mail-script.js' %}"></script>
+    <script src="{% static './assets/js/jquery.ajaxchimp.min.js' %}"></script>
+    
+    <!-- Jquery Plugins, main Jquery -->	
+    <script src="{% static './assets/js/plugins.js' %}"></script>
+    <script src="{% static './assets/js/main.js' %}"></script>
+    
+
+    <script src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/product_filter.js' %}"></script>
+    
+
+    {% block scripts %}
+
+    {% endblock scripts %}
+    
+    
+    <script src="{% static 'js/checkout.js' %}"></script>
+    
+
+
+</body>
+</html>

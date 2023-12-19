@@ -1,0 +1,78 @@
+{% extends 'custom_admin/base.html' %}
+
+
+
+{% block content %}
+
+{% include 'custom_admin/sidebar.html' %}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-8">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Orders</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Customer</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Payment Mode</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in products %}
+                            <tr>
+                                <th scope="row">{{order.id}}</th>
+                                <td>{{order.created_at}}</td>
+                                <td>{{order.customer.username}}</td>
+                                <td>{{order.total_price}}</td>
+                                <td>{{order.payment.payment_mode}}</td>
+                                <td>{{order.status}}</td>
+                                <td><a class="btn btn-sm btn-primary" href="{% url 'order_specific' order.id %}">Detail</a></td>
+                            </tr>
+                            {% endfor %}
+                            
+                        </tbody>
+                    </table>
+
+                    <nav aria-label="Page navigation example " id="pagination-product">
+                        <ul class="pagination justify-content-center ">
+                        {% if products.has_previous %}
+                          <li class="page-item">
+                            <a class="page-link" href="/custom_admin/display_orders/?page=1" tabindex="-1">First</a>
+                          </li>
+                          <li class="page-item ">
+                            <a class="page-link " href="/custom_admin/display_orders/?page={{products.previous_page_number}}" tabindex="-1">Previous</a>
+                          </li>
+                          {% endif %}
+                          {% for n in totalPageList %}
+                          <li class="page-item"><a class="page-link" href="/custom_admin/display_orders/?page={{n}}">{{n}}</a></li>
+                          {% endfor %}
+                          {% if products.has_next %}
+                          
+                          <li class="page-item">
+
+                            <a class="page-link" href="/custom_admin/display_orders/?page={{products.next_page_number}}">Next</a>
+                          </li>
+                          <li class="page-item">
+                            <a class="page-link" href="/custom_admin/display_orders/?page={{total_pages}}">Last</a>
+                          </li>
+                          {% endif %}
+                        </ul>
+                      </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

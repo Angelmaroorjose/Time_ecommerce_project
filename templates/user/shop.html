@@ -1,0 +1,336 @@
+
+{% extends 'user/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .search-suggestion ul li{
+        border-bottom: 1px dotted;
+    padding-left: 12px;
+    }
+    .suggestion-item {
+        padding: 10px;
+        cursor: pointer;
+    }
+    
+    .suggestion-item:hover {
+        background-color: #929ebe;;
+    }
+</style>
+    <main>
+        <!-- Hero Area Start-->
+        <div class="slider-area ">
+            <div class="single-slider slider-height2 d-flex align-items-center" style="    min-height: 100px;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap text-center">
+                                <h2>Watch Shop</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Hero Area End-->
+        <!-- Latest Products Start -->
+        <section class="popular-items latest-padding" style="padding-top: 50px;">
+            <div class="container-fluid">
+                <div class="row product-btn justify-content-between mb-40 container mx-auto">
+                    <div class="properties__button">
+                        <!--Nav Button  -->
+                        <nav>                                                      
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">All Products</a>
+                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"> Trending</a>
+
+                            </div>
+                        </nav>
+                        <!--End Nav Button  -->
+                    </div>
+                    <!-- Grid and List view -->
+                    <div class="grid-list-view">
+                    </div>
+                    <!-- Select items -->
+                    <div class="select-this">
+                        <form action="#">
+                            <div class="select-itms">
+                                <select name="select" id="select1">
+                                    <option value="">40 per page</option>
+                                    <option value="">50 per page</option>
+                                    <option value="">60 per page</option>
+                                    <option value="">70 per page</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Nav Card -->
+                <div class="tab-content" id="nav-tabContent" style="display:flex;">
+                    <div id="sidebar-full" style="
+                        width: 250px;
+                        margin: 0;"> 
+                       
+                        <section id="sidebar">
+                            <div class="d-flex justify-content-between">
+                                <h4 id="burgundy">Search Products</h4>
+                                <button id="sidebar-close">&times;</button>
+                            </div>
+                            <form class="form-inline mb-3" action="/shop/search" method="get">
+                                <div class="input-group ">
+                                <input type="text" class="form-control"  placeholder="Search" name="q" id="search">
+                                
+                                <div class="input-group-append">
+                                  <button class="genric-btn info" style="line-height:35px;" type="submit">Button</button>
+                                </div>
+                                
+                              </div>
+                              <div style="flex-direction:column;    width: 100%;
+                              background-color: grey;" class="d-flex search-suggestion">
+                                <ul id="suggestions"></ul>
+                            </div>
+                            </form>
+                            <div class="border-bottom pb-2 ml-2 mt-4">
+                            <h4 id="burgundy">Filters</h4>
+                            </div>
+                            <div class="py-2 border-bottom ml-3">
+                                <h6 class="font-weight-bold">Categories</h6>
+                                <div id="orange"><span class="fa fa-minus"></span></div>
+                                
+                                {% for cat in cats %}
+                                <div class="form-group"> <input class="filter-checkbox" data-filter ="category" type="checkbox" value={{cat.id}} id="{{cat.id}}"> <label for="{{cat.id}}">{{cat.name}}</label> </div>
+                                {% endfor %}
+                            
+                            
+                            </div>
+                            <div class="py-2 border-bottom ml-3">
+                                <h6 class="font-weight-bold">Brand</h6>
+                                <div id="orange"><span class="fa fa-minus"></span></div>
+                            
+                                {% for brand in brands %}
+                                <div class="form-group"> <input class="filter-checkbox" data-filter ="brand"  type="checkbox" value={{brand.id}} id="{{brand.id}}"> <label for="{{brand.id}}">{{brand.name}}</label> </div>
+                                {% endfor %}
+                            
+                         
+                            </div>
+                            <div class="py-2 border-bottom ml-3">
+                                <h6 class="font-weight-bold">Price</h6>
+                                <div id="orange"><span class="fa fa-minus"></span></div>
+                            
+                                
+                                <div class="form-group"> 
+                                    <input value={{minMaxPrice.selling_price__min}} class="filter-checkbox" id="rangeInput" oninput = "maxPrice.value = this.value" type="range" min="{{minMaxPrice.selling_price__min}}" max="{{minMaxPrice.original_price__max}}" > 
+                                    <p class="mb-2">{{minMaxPrice.selling_price__min |floatformat:0 }} - {{minMaxPrice.original_price__max|floatformat:0 }}</p>
+                                    <input value="{{minMaxPrice.selling_price__min |floatformat:0 }}" min="{{minMaxPrice.selling_price__min |floatformat:0}}" max="{{minMaxPrice.original_price__max}}" onkeyup="rangeInput.value=this.value"  class="single-input shadow mb-4" type="number" id="maxPrice" style="border-radius:20%;"> 
+                                    <p><button id="priceFilterBtn" class="btn_1 btn-sm">Filter</button></p>
+
+                                </div>
+                                
+                            
+                         
+                            </div>
+                            <div class="py-2 ml-3">
+                            <h6 class="font-weight-bold">Top Offers</h6>
+                            <div id="orange"><span class="fa fa-minus"></span></div>
+                            <form>
+                            <div class="form-group"> <input type="checkbox" id="25off"> <label for="25">25% off</label> </div>
+                            <div class="form-group"> <input type="checkbox" id="5off"> <label for="5off" id="off">5% off on artisan breads</label> </div>
+                            </form>
+                            </div>
+                            </section>
+
+                    </div>
+                    <!-- card one -->
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" style="width:100%;">
+                        <div class="row" id="filteredProducts">
+                            <button class="btn_3 mb-5" style="background-color: #f2f2f2;
+                            border-radius: 30px;
+                            border: none;
+                            color: #333333;
+                            height: 31px;
+                            line-height: 31px;
+                            padding: 0px 36px;
+                            margin-bottom: 22px;" id="sidebar-toggle">Filter Products</button>
+                            <p class="ajaxLoader">Loading...</p>
+                            {% for product in products %}
+                            {% csrf_token %}
+                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                                <div class="single-popular-items mb-50 text-center">
+                                    <div class="popular-img">
+                                        <a href="{% url 'product_detail' product.slug %}" style="cursor:pointer;"><img style="width: 100%;height: 380px;object-fit: cover;" src="{{product.product_image.url}}" alt=""></a>
+                                        <div class="img-cap">
+                                            
+                                            <input type="hidden" value={{product.quantity}}  id = "{{product.id}}" class="shop-page-guest-cart">
+                                            <input type="hidden" value={{product.id}} class="home-page-product-id">
+                                            <button value="{{product.id}}"  class="add-cart btn btn-primary">Add to Cart</button>
+                                        </div>
+                                       
+                                        <div class="favorit-items">
+                                            <span class="flaticon-heart addToWishlist"></span>
+                                        </div>
+                                      
+                                        {% if not product.quantity %}
+                                        <div style="position:absolute; top:10px;" class="alert alert-danger" role="alert">
+                                            Out of Stock
+                                          </div>
+                                          {% endif %}
+                                    </div>
+                                    <div class="popular-caption">
+                                        <h3><a href="product_details.html">{{product.name}}</a></h3>
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <span>${{product.selling_price}}</span>
+                                            {% if product.offer_status %}
+                                            <strike style="color:red;" class="product_discount"> <span class="ml-3" style='color:black'>${{product.original_price}}<span>
+                                            </strike>
+                                            {% endif %}
+                                        </div>
+                                            {% if product.offer %}
+                                                        {% if product.category.offer %} 
+                                                                {% if product.category.offer.discount_amount > product.offer.discount_amount %}
+                                                                <span class="text-success ml-3">{{product.category.offer.discount_amount|floatformat:0}} % off</span> 
+                                                                {% else %}
+                                                                <span class="text-success ml-3"> {{product.offer.discount_amount |floatformat:0}} % off</span>
+                                                                {% endif %} 
+                                                {% else %}<span class="text-success ml-3"> {{product.offer.discount_amount |floatformat:0}} % off</span>{% endif %}
+
+                                            {% elif product.category.offer %} <span class="text-success ml-3">{{product.category.offer.discount_amount|floatformat:0}} % off</span> {% endif %}
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                           
+                        </div>
+                        <nav aria-label="Page navigation example " id="pagination-product">
+                            <ul class="pagination justify-content-center ">
+                            {% if products.has_previous %}
+                              <li class="page-item">
+                                <a class="page-link" href="/shop/?page=1" tabindex="-1">First</a>
+                              </li>
+                              <li class="page-item ">
+                                <a class="page-link " href="/shop/?page={{products.previous_page_number}}" tabindex="-1">Previous</a>
+                              </li>
+                              {% endif %}
+                              {% for n in totalPageList %}
+                              <li class="page-item"><a class="page-link" href="/shop/?page={{n}}">{{n}}</a></li>
+                              {% endfor %}
+                              {% if products.has_next %}
+                              
+                              <li class="page-item">
+
+                                <a class="page-link" href="/shop/?page={{products.next_page_number}}">Next</a>
+                              </li>
+                              <li class="page-item">
+                                <a class="page-link" href="/shop/?page={{total_pages}}">Last</a>
+                              </li>
+                              {% endif %}
+                            </ul>
+                          </nav>
+                    </div>
+                    <!-- Card two -->
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" style="width:100%;">
+                        <div class="row">
+                            {% for product in products %}
+                            {% csrf_token %}
+                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                                <div class="single-popular-items mb-50 text-center">
+                                    <div class="popular-img">
+                                        <a href="{% url 'product_detail' product.slug %}" style="cursor:pointer;"><img style="width: 100%;height: 380px;object-fit: cover;" src="{{product.product_image.url}}" alt=""></a>
+                                        <div class="img-cap">
+                                            <input type="hidden" value={{product.quantity}} class="shop-page-guest-cart">
+                                            <input type="hidden" value={{product.id}} class="home-page-product-id">
+                                            <button value="{{product.id}}"  class="add-cart btn btn-primary">Add to Cart</button>
+                                        </div>
+                                       
+                                        <div class="favorit-items">
+                                            <span class="flaticon-heart addToWishlist"></span>
+                                        </div>
+                                      
+                                        {% if not product.quantity %}
+                                        <div style="position:absolute; top:10px;" class="alert alert-danger" role="alert">
+                                            Out of Stock
+                                          </div>
+                                          {% endif %}
+                                    </div>
+                                    <div class="popular-caption">
+                                        <h3><a href="product_details.html">{{product.name}}</a></h3>
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <span>${{product.selling_price}}</span>
+                                            {% if product.offer_status %}
+                                            <strike style="color:red;" class="product_discount"> <span class="ml-3" style='color:black'>${{product.original_price}}<span>
+                                            </strike>
+                                            {% endif %}
+                                        </div>
+                                            {% if product.offer %}
+                                                        {% if product.category.offer %} 
+                                                                {% if product.category.offer.discount_amount > product.offer.discount_amount %}
+                                                                <span class="text-success ml-3">{{product.category.offer.discount_amount|floatformat:0}} % off</span> 
+                                                                {% else %}
+                                                                <span class="text-success ml-3"> {{product.offer.discount_amount |floatformat:0}} % off</span>
+                                                                {% endif %} 
+                                                {% else %}<span class="text-success ml-3"> {{product.offer.discount_amount |floatformat:0}} % off</span>{% endif %}
+
+                                            {% elif product.category.offer %} <span class="text-success ml-3">{{product.category.offer.discount_amount|floatformat:0}} % off</span> {% endif %}
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                           
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                <!-- End Nav Card -->
+            </div>
+        </section>
+        <!-- Latest Products End -->
+        <!--? Shop Method Start-->
+        
+
+        <div class="shop-method-area">
+            <div class="container">
+                <div class="method-wrapper">
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-xl-4 col-lg-4 col-md-6">
+                            <div class="single-method mb-40">
+                                <i class="ti-package"></i>
+                                <h6>Free Shipping Method</h6>
+                                <p>aorem ixpsacdolor sit ameasecur adipisicing elitsf edasd.</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-6">
+                            <div class="single-method mb-40">
+                                <i class="ti-unlock"></i>
+                                <h6>Secure Payment System</h6>
+                                <p>aorem ixpsacdolor sit ameasecur adipisicing elitsf edasd.</p>
+                            </div>
+                        </div> 
+                        <div class="col-xl-4 col-lg-4 col-md-6">
+                            <div class="single-method mb-40">
+                                <i class="ti-reload"></i>
+                                <h6>Secure Payment System</h6>
+                                <p>aorem ixpsacdolor sit ameasecur adipisicing elitsf edasd.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Shop Method End-->
+    </main>
+   <script>
+    const sidebar = document.getElementById('sidebar-full');
+    const toggleButton = document.getElementById('sidebar-toggle');
+    const closeButton = document.getElementById('sidebar-close');
+
+    toggleButton.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+
+    closeButton.addEventListener('click', () => {
+        sidebar.classList.remove('active');
+      });
+});
+   </script>
+    {% endblock %}
+    

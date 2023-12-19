@@ -1,0 +1,51 @@
+{% extends 'user/base.html' %}
+{% block content %}
+<div class="section-top-border " style="padding:0;">
+    <div class="row d-flex container">
+            <style>
+                .single-input{
+                    background:#c1c1cc;
+                }
+
+            </style>
+        
+            <div class="col-lg-3">
+                <h4 class="ml-lg-4">Name</h4>
+            {% include 'user/user_sidebar.html' %}
+            </div>
+         <div class="col-lg-1"></div>
+        <div class="col-lg-7 col-md-7 mt-5">
+            <h3 class="mb-30">User Profile</h3>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="mt-10">
+                    <label>First Name</label>
+                    {{form.first_name}}
+                </div>
+                <div class="mt-10">
+                    <label>Last Name</label>
+                    {{form.last_name}}
+                </div>
+                <div class="mt-10">
+                    <label>Username</label>
+                   {{form.username}}
+                </div>
+                <div class="mt-10">
+                    <label>Phone Number</label>
+                    {{form.phone_number}}
+                </div>
+                <div class="mt-10">
+                    <label>Email</label>
+                    {{form.email}}
+                </div>
+                
+               
+                <button class="btn_1" type="submit">Save</button>
+               
+            </form>
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .single-unique-product {
+        background-color: #8b90ca;
+        text-align: center;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        -webkit-transition: all 0.3s ease 0s;
+        -moz-transition: all 0.3s ease 0s;
+        -o-transition: all 0.3s ease 0s;
+        transition: all 0.3s ease 0s;
+    }
+    .single-unique-product img {
+        padding: 40px 17px;
+    }
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+    img {
+        vertical-align: middle;
+        border-style: none;
+    }
+    .single-unique-product .desc {
+        background-color: #f9f9ff;
+        padding: 20px 0;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+    .single-unique-product .primary-btn {
+        background-color: #222;
+        color: #fff;
+        border: 1px solid #fff;
+        -webkit-transition: all 0.3s ease 0s;
+        -moz-transition: all 0.3s ease 0s;
+        -o-transition: all 0.3s ease 0s;
+        transition: all 0.3s ease 0s;
+    }
+    .primary-btn {
+        background: #fff;
+        border: 1px solid transparent;
+        color: #222;
+        padding-left: 40px;
+        padding-right: 40px;
+        border-radius: 50px;
+    }
+</style>
+        <div class="container">
+            <!-- Section tittle -->
+            <div class="row justify-content-center">
+                <div class="col-xl-7 col-lg-8 col-md-10">
+                    <div class="section-tittle mb-70 text-center">
+                        <h3>Search Results for {{request.GET.q}}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                
+                {% for product in data %}
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="single-unique-product" style="    border: 1px solid #8b90ca;">
+                        <img class="img-fluid" src="{{product.product_image.url}}" alt="">
+                        <div class="desc">
+                            <h5 class="card-title">{{product.name}}</h5>
+                            {% if not product.quantity %}
+                            <div style="position:absolute; top:10px;" class="alert alert-danger" role="alert">
+                                Out of Stock
+                              </div>
+                            {% endif %}
+                        <div class="d-flex justify-content-center align-items-center">
+                            <h6>{{product.selling_price}}</h6> {% if product.offer_status %}
+                            <strike style="color:red;" class="product_discount"> <span class="ml-3" style='color:black'>${{product.original_price}}<span>
+                            </strike>
+                            {% endif %}
+                        </div>
+                        {% if product.offer %} <span class="text-success ml-3 d-block"> {{product.offer.discount_amount |floatformat:0}} % off</span> {% elif product.category.offer %} <span class="text-success ml-3 d-block">{{product.category.offer.discount_amount|floatformat:0}} % off</span> {% endif %}
+
+                            <a class="text-uppercase primary-btn" href="{% url 'product_detail' product.slug %}">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                
+                
+            </div>
+            <!-- Button -->
+            <div class="row justify-content-center">
+                <div class="room-btn pt-70">
+                    <a href="/shop/" class="btn view-btn1">View More Products</a>
+                </div>
+            </div>
+        </div>
+        
+
+{% endblock %}

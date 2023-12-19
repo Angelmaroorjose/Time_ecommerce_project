@@ -1,0 +1,56 @@
+{% extends 'custom_admin/base.html' %}
+
+
+{% block content %}
+
+{% include 'custom_admin/sidebar.html' %}
+
+
+<div class="container mt-5">
+    <div class="row ">
+        <div class="col-lg-8 mx-auto">
+    <div class="bg-secondary rounded h-100 p-4 ">
+        <h6 class="mb-4">Responsive Table</h6>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">UserName</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone Number</th>
+                        <th scope="col">Options</th>
+                        <th scope="col">Active</th>
+                        
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in user %}
+                    <tr>
+                        <th scope="row">{{product.id}}</th>
+                        
+                        <td>{{product.username}}</td>
+                        <td>{{product.email}}</td>
+                        <td>{{product.phone_number}}</td>
+                        <td>{{product.is_active}}</td>
+                        {% if product.is_active %}
+                        <td><a href=" {% url  'block_user' product.id  %}" class="btn btn-light">Block</a></td>
+                         {% else %}
+                         <td><a href=" {% url  'unblock_user' product.id  %}" class="btn btn-light">Unblock</a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+    <a href="add_user" class="btn btn-primary">Add User</a>
+    </div>
+    </div>
+    
+    </div>
+
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends 'user/base.html' %}
+
+{% block content %}
+  <main>
+      <!-- Hero Area Start-->
+      <div class="slider-area ">
+          <div class="single-slider slider-height2 d-flex align-items-center" style="    min-height: 100px;">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-xl-12">
+                          <div class="hero-cap text-center">
+                              <h2>Confirmation</h2>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!--================ confirmation part start =================-->
+      <section class="confirmation_part section_padding">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="confirmation_tittle">
+                <span>Thank you. Your order has been received.</span>
+              </div>
+            </div>
+            <div class="col-lg-6 col-lx-4">
+              <div class="single_confirmation_details">
+                <h4>order info</h4>
+                <ul>
+                  <li>
+                    <p>order number</p><span>: {{orders.id}}</span>
+                  </li>
+                  <li>
+                    <p>date</p><span>: {{orders.created_at|date:"Y-m-d" }}</span>
+                  </li>
+                  <li>
+                    <p>total</p><span>: USD {{orders.get_order_total}}</span>
+                  </li>
+                  <li>
+                    <p>Payment method</p><span>: {{orders.payment.payment_mode}}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-6 col-lx-4">
+              <div class="single_confirmation_details">
+                <h4>Billing Address</h4>
+                <ul>
+                  <li>
+                    <p>Street</p><span>: {{orders.billing_address.city}}</span>
+                  </li>
+                  <li>
+                    <p>city</p><span>:  {{orders.billing_address.city}}</span>
+                  </li>
+                  <li>
+                    <p>country</p><span>:  {{orders.billing_address.country}}</span>
+                  </li>
+                  <li>
+                    <p>postcode</p><span>:  {{orders.billing_address.pincode}}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-6 col-lx-4">
+              <div class="single_confirmation_details">
+                <h4>shipping Address</h4>
+                <ul>
+                  <li>
+                    <p>Street</p><span>: {{orders.shipping_address.city}}</span>
+                  </li>
+                  <li>
+                    <p>city</p><span>: {{orders.shipping_address.city}}</span>
+                  </li>
+                  <li>
+                    <p>country</p><span>: {{orders.shipping_address.country}}</span>
+                  </li>
+                  <li>
+                    <p>postcode</p><span>: {{orders.shipping_address.pincode}}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="order_details_iner">
+                <h3>Order Details</h3>
+                <table class="table table-borderless">
+                  <thead>
+                    <tr>
+                      <th scope="col" colspan="2">Product</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in ordered_items %}
+                    <tr>
+                      
+                      <th colspan="2"><span>{{item.product.name}}</span></th>
+                      <th>{{item.quantity}}</th>
+                      <th> <span>{{item.get_total}}</span></th>
+                    </tr>
+                    {% endfor %}
+                    
+                    <tr>
+                      <th colspan="3">Subtotal</th>
+                      <th> <span>${{orders.total_price}}</span></th>
+                    </tr>
+                    
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th scope="col" colspan="3">Quantity : {{orders.get_cart_items}}</th>
+                      <th scope="col">Total: ${{orders.total_price}}</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-4">
+            <a href="{% url 'order-summary' %}"class="btn_1">Your Orders</a>
+          </div>
+        </div>
+      </section>
+      <!--================ confirmation part end =================-->
+  </main>
+  {% endblock %}

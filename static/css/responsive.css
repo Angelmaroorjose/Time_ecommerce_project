@@ -1,0 +1,62 @@
+@media screen and (max-width:768px) {
+    
+
+.responsive-right{
+    display: none;
+}
+
+
+}
+
+@media screen and (min-width:769px) {
+    .responsive-right-navbar{
+        display: none!important;
+    }
+    .responsive-right-navbar-username{
+        display: none!important;
+    }
+}
+
+#sidebar-toggle{
+    display: none;
+}
+#sidebar-close{
+    display: none;
+}
+@media screen and (max-width:540px) {
+    #sidebar-full {
+        position: fixed;
+        top: 0;
+        left: -300px;
+        width: 300px;
+        height: 100%;
+        background-color: #ccc;
+        transition: left 0.3s ease;
+      }
+      
+      #sidebar-full.active {
+        left: 0;
+        z-index: 10000;
+      }
+      
+      #sidebar-toggle {
+        display: block;
+        left: 19px;
+        position: relative;
+        top: 10px;
+        z-index: 3;
+      }
+      
+#sidebar-close {
+    display: flex;
+    position: absolute;
+    color: black;
+    right: 10px;
+    font-size: 1.5em;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+      
+    
+}

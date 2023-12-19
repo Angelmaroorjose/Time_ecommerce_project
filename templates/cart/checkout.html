@@ -1,0 +1,294 @@
+{% extends 'user/base.html' %}
+{% block content %}
+
+<script src="https://www.paypal.com/sdk/js?client-id=AYkp5pf6GS4Ghw4JhnlWPVx-mEmxBkOBfEIPMLWpVvfG9geoejn0PnjUrLzAXTAZU5nZb5kawxb__MT0&currency=USD"></script>
+<style>
+  .coupon-input{
+    border: 1px solid #cec6c6 !important;
+    border-style: solid;
+    border-radius: 30px;
+    border-color: #cec6c6;
+    margin-top:10px;
+  }
+</style>
+    <main>
+        <!-- Hero Area Start-->
+        <div class="slider-area ">
+            <div class="single-slider slider-height2 d-flex align-items-center" style="    min-height: 100px;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap text-center">
+                                <h2>Checkout</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--================Checkout Area =================-->
+        <section class="checkout_area section_padding">
+          <div class="container">
+            
+            {% comment %} <div class="cupon_area">
+              <div class="check_title">
+                <h2>
+                  Have a coupon?
+                  <a href="#">Click here to enter your code</a>
+                </h2>
+              </div>
+              <input type="text" placeholder="Enter coupon code" />
+              <a class="tp_btn" href="#">Apply Coupon</a>
+            </div> {% endcomment %}
+            <div class="billing_details">
+              <div class="row mt-5">
+                
+                <div class="col-lg-8 dropdown-address">
+                  <div class="dropdown show d-flex justify-content-around"  style="background-color: #E7E9EB;padding-top: 10px; ">
+
+                    <div><h1 style="font-size:28px;"> Address Section </h1></div>
+                    <div></div>
+                    <div><a class=" dropdown-toggle" style="color:black; font-size:30px;" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    </a>
+                    </div>
+
+                     
+                   
+                  </div>
+                  <h3 class="mt-5">Coupon Section</h3>
+                  <div class="check_title">
+                    <h2>
+                      Have a coupon?
+                    </h2>
+                  </div>
+                  <div class="mb-5">
+                  <form id="id_coupon_form" method="POST" action="">
+                    <div>
+                    {% csrf_token %}
+
+               
+                    <div class="col-md-12 form-group p_star">
+                      {{coupon_form.code}}
+                    </div>
+                    </div>
+                    <label class="text-danger" id="coupon-result"></label>
+                    <label class="text-success" id="coupon-result-success"></label>
+                    <button class="tp_btn" id="apply-coupon-btn" type="submit">Apply</button>
+                </form>
+                </div>
+                  <h3>Billing Details</h3>
+                  <div>
+                    <div class="card" style="">
+                      <div class="card-body">
+                        <h5 class="card-title">{{request.user}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{address.phone_number}}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">{{address.email}}</h6>
+                        <p class="card-text"> {{address.city}}, {{address.district}}, {{address.state}}, {{address.country}},{{address.pincode}}</p>
+                        <a href="{% url 'order_address' %}" class="genric-btn info radius">Add Another Address</a>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <h3 class="mt-5">Shipping Details</h3>
+                  <div>
+                    <div class="card" style="">
+                      <div class="card-body">
+                        
+                        <h6 class="card-subtitle mb-2 text-muted">{{address.phone_number}}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">{{address.email}}</h6>
+                        <p class="card-text"> {{address.city}}, {{address.district}}, {{address.state}}, {{address.country}},{{address.pincode}}</p>
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+                <div class="col-lg-4">
+                  <div class="order_box">
+                    <h2 style="border-bottom:0;">Your Order</h2>
+                    <table class="list table">
+                      <thead>
+                        <tr>
+                          <th>Product</th>
+                          <th>Qty</th>
+                          <th>Price</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for item in items %}
+                        <tr>
+                          <td>
+                            <img src = {{item.product.product_image.url}} height="50px" width="50px">
+                            {{item.product.name}}
+                          </td>
+                          <td>{{item.quantity}}</td>
+                          <td>{{item.get_total}}</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <ul class="list list_2 total-change">
+                      
+                      <li>
+                        <a href="#">SubTotal
+                          <span>{{order.total_price }}</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">Discount
+                          <span>{{discount }}</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">Total
+                          <span>{{order.total_price }}</span>
+                        </a>
+                      </li>
+                    </ul>
+                    
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="row mt-5">
+              <div class="col-lg-8">
+                <div class="dropdown show d-flex justify-content-around"  style="background-color: #E7E9EB;padding-top: 10px; ">
+
+                  <div><h1 style="font-size:28px;"> Payment Section </h1></div>
+                  <div></div>
+                  <div><a class=" dropdown-toggle" style="color:black; font-size:30px;" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  </a>
+                  </div>
+
+                   
+                 
+                </div>
+                
+              </div>
+              <div class="col-lg-4"></div>
+              <div class="col-lg-3 mt-5">
+                <div>
+                  <div id = "paypal-button-container"></div>
+                </div>
+              </div>
+              <div class="col-lg-3 mt-5">
+                <a style="    width: 260px;
+                height: 40px;
+                text-align: center;
+                padding: 9px;
+                font-size: 14px;
+                background-color: #1036c9;
+                color: #ebedf1;
+                max-width:260px;" href="{% url 'cash_on_delivery' %}" class="btn_3">Cash On Delivery</a>
+              </div>
+              <div class="col-lg-3 mt-5">
+                <a style="    width: 240px;
+                height: 40px;
+                text-align: center;
+                padding: 9px;
+                font-size: 14px;
+                background-color: #1036c9;
+                color: #ebedf1;"  href="" id="rzp-button1"  class="btn_3 payWithRazorPay">RazorPay</a>
+              </div>
+              <div class="col-lg-3 mt-5">
+                <a style="    width: 260px;
+                height: 40px;
+                text-align: center;
+                padding: 9px;
+                font-size: 14px;
+                background-color: #1036c9;
+                color: #ebedf1;
+                max-width:260px;" href="" id="payWallet" onclick = "payWithWallet()" class="btn_3">Wallet</a>
+              </div>
+            </div>
+
+
+
+            
+          </div>
+        </section>
+        <!--================End Checkout Area =================-->
+    </main>
+   
+    <script>
+      
+      function getToken(name){
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== ''){
+            var cookies = document.cookie.split(';');
+            for(var i = 0;i < cookies.length;i++ ){
+                var cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length +1) === (name + '=')){
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getToken('csrftoken')
+    var total = "{{order.total_price}}"
+    var url = '/shop/payments'
+    var orderID = "{{order.id}}"
+    var payment_method = 'PayPal'
+
+      paypal.Buttons({
+        
+        // Order is created on the server and the order id is returned
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: total
+              }
+            }]
+          })
+          
+        },
+        // Finalize the transaction on the server after payer approval
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details){
+           console.log(details)
+            sendData();
+            swal("Congratulations!", "Your Order Has Been Placed Successfully","success").then((value) =>{
+              window.location.href = "/shop/confirmation"
+          })
+           function sendData(){
+            fetch(url,{
+             method : "POST",
+              headers: {
+                "Content-type": "application/json",
+                "X-CSRFToken": csrftoken,
+              },
+              
+               body: JSON.stringify({
+                orderID: orderID,
+                transID: details.id,
+                payment_method: payment_method,
+                status: details.status,
+              }), 
+            })
+           }
+          }) 
+        }
+      }).render('#paypal-button-container');
+    </script>
+
+    <script>
+    
+    </script>
+
+
+    
+    {% endblock %}
+
+
+    {% block scripts %}
+
+    
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    {% endblock scripts %}
+
+    

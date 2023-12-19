@@ -1,0 +1,66 @@
+{% extends 'custom_admin/base.html' %}
+{% block content %}
+
+{% include 'custom_admin/sidebar.html' %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-8 mt-5">
+            <h3 class="mb-30">Order Details</h3>
+        <table class="table table-image">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Number</th>
+                <th scope="col">Product Image</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for order in order_items %}
+              <tr>
+                <th style="vertical-align:middle;" scope="row">1</th>
+                <td style="vertical-align:middle;" class="w-25">
+                    <img src="{{order.product.product_image.url}}" class="img-fluid img-thumbnail">
+                </td>
+                <td style="vertical-align:middle;">{{order.product.name}}</td>
+                <td style="vertical-align:middle;">{{order.product.selling_price}}</td>
+                <td style="vertical-align:middle;">{{order.quantity}}</td>
+                <td style="vertical-align:middle;">{{order.get_total}}</td>
+                <td style="vertical-align:middle;">
+                    <form method="post" action="{% url 'edit_orderitem' orders.id order.id %}">
+                    {% csrf_token %}
+                    <select name="status">
+                        <option value="Pending" {% if order.status == 'Pending' %}selected{% endif %}>Pending</option>
+                        <option value="Cancelled" {% if order.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                        <option value="Shipped" {% if order.status == 'Out For Shipping' %}selected{% endif %}>Shipped</option>
+                        <option value="Delivered" {% if order.status == 'Completed' %}selected{% endif %}>Delivered</option>
+                        <option value="Return Requested" {% if order.status == 'Return Requested' %}selected{% endif %}>Return Requested</option>
+                        <option value="Return Approved" {% if order.status == 'Return Approved' %}selected{% endif %}>Return Approved</option>
+                    </select>
+                    <input class="btn btn-primary mt-2" type="submit" value="Update">
+                    <p>{{order.status}}</p>
+                </form></td>
+                
+              </tr>
+              {% endfor %}
+
+              
+               <tr>
+                {% if orders.cancelled %}
+                <td><h2>Order Has Been Cancelled</h2></td>
+                {% else %}
+                <td><a class="btn btn-sm btn-primary" href="{% url 'edit_order_specific' orders.id %}">Edit Status</a></td>
+                {% endif %}
+               </tr>
+               
+            </tbody>
+            
+          </table> 
+    </div>
+</div>
+
+{% endblock %}

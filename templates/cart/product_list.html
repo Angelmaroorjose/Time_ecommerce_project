@@ -1,0 +1,43 @@
+{% for product in data %}
+{% csrf_token %}
+<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+    <div class="single-popular-items mb-50 text-center">
+        <div class="popular-img">
+            <a href="{% url 'product_detail' product.slug %}" style="cursor:pointer;"><img style="width: 360px;height: 380px;object-fit: cover;" src="{{product.product_image.url}}" alt=""></a>
+            <div class="img-cap">
+                <button value="{{product.id}}"  class="add-cart btn btn-primary">Add to Cart</button>
+            </div>
+           
+            <div class="favorit-items">
+                <span class="flaticon-heart"></span>
+            </div>
+          
+            {% if not product.quantity %}
+            <div style="position:absolute; top:10px;" class="alert alert-danger" role="alert">
+                Out of Stock
+              </div>
+              {% endif %}
+        </div>
+        <div class="popular-caption">
+            <h3><a href="product_details.html">{{product.name}}</a></h3>
+            <div class="d-flex justify-content-center align-items-center">
+                <span>${{product.selling_price}}</span>
+                {% if product.offer_status %}
+                <strike style="color:red;" class="product_discount"> <span class="ml-3" style='color:black'>${{product.original_price}}<span>
+                </strike>
+                {% endif %}
+            </div>
+                {% if product.offer %} 
+                {% if product.category.offer %} 
+                {% if product.category.offer.discount_amount > product.offer.discount_amount %}
+                <span class="text-success ml-3">{{product.category.offer.discount_amount|floatformat:0}} % off</span> 
+                {% else %}
+                <span class="text-success ml-3"> {{product.offer.discount_amount |floatformat:0}} % off</span>
+                {% endif %} 
+        {% else %}<span class="text-success ml-3"> {{product.offer.discount_amount |floatformat:0}} % off</span>{% endif %}
+
+                {% elif product.category.offer %} <span class="text-success ml-3">{{product.category.offer.discount_amount|floatformat:0}} % off</span> {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}

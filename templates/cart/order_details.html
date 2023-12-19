@@ -1,0 +1,95 @@
+{% extends 'user/base.html' %}
+
+{% block content %}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3">{% include 'user/user_sidebar.html' %}</div>
+        <div class="col-lg-8 mt-5">
+            <h3 class="mb-30">Order Details</h3>
+        <table class="table table-image">
+            <thead class="thead-dark">
+              <tr>
+                
+                <th scope="col">Product Image</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+                <th scope="col">Invoice</th>
+                
+             
+              
+                
+               {% if orders.status == "Completed" %}
+                <th scope="col">Return</th>
+                {% endif %}
+            
+                
+              </tr>
+            </thead>
+            <tbody>
+                {% for order in order_items %}
+              <tr>
+                
+                <td style="vertical-align:middle;" class="w-25">
+                    <img src="{{order.product.product_image.url}}" class="img-fluid img-thumbnail">
+                </td>
+                <td style="vertical-align:middle;">{{order.product.name}}</td>
+                <td style="vertical-align:middle;">{{order.product.selling_price}}</td>
+                <td style="vertical-align:middle;">{{order.quantity}}</td>
+                <td style="vertical-align:middle;">{{order.get_total}}</td>
+                {% if order.status == "Return Requested" %}
+                <td  style="vertical-align:middle;"><h3>Return Requested</h3></td>
+                {% elif order.status == "Cancelled"%}
+                <td  style="vertical-align:middle;"><h3>Order Cancelled</h3></td>
+                {% elif order.status == "Return Approved"%}
+                <td  style="vertical-align:middle;"><h3>Return is successful</h3></td>
+                 {% else %}
+                <td style="vertical-align:middle;"> <a class="btn btn-dark" href="{% url 'invoice' orders.id order.product.id %}">Invoice</a></td>
+                 {% if order.status == "Delivered" %}
+                <td style="vertical-align:middle;"> <a class="btn_3" href="{% url 'return' orders.id order.product.id %}">Return</a></td>
+                {% endif %}
+                  {% endif %}
+              </tr>
+              {% endfor %}
+
+            
+               <tr>
+               
+                <td></td>
+                <td></td>
+                <td></td>
+                
+              
+               </tr>
+               
+            </tbody>
+            
+          </table> 
+          {% if not orders.cancelled %}
+          {% if orders.status == "Completed" %}
+          <h3>Your Order is successful</h3>
+          {% elif orders.status == "Pending" %}
+          <a class="btn_3" href="{% url 'cancel_order' id %}">Cancel Order</a>
+          {% elif orders.status == "Return" %}
+          <h3>Return has been requested</h3>
+          {% elif orders.status == "ReturnApproved" %}
+          <h3>Returned Successfully</h3>
+          {% endif %}
+          {% endif %}
+          {% if orders.cancelled %}
+                
+                <h2>Your Order has been cancelled</h2>
+                
+          {% else %}
+          
+                
+                {% endif %}
+        </div>   
+    </div>
+</div>
+
+
+{% endblock %}

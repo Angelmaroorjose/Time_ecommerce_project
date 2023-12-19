@@ -1,0 +1,53 @@
+{% extends 'user/base.html' %}
+{% block content %}
+<style>
+    .table-order:hover{
+        background-color:#0394fc;
+    }
+</style>
+<main>
+<div class= "container-fluid">
+<div class="row">
+    <div class="col-lg-3">
+    {% include 'user/user_sidebar.html' %}
+    </div>
+    <div class="col-lg-8">
+    
+        <div class="section-top-border">
+            {% if orders %}
+            <h3 class="mb-20">Order Summary</h3>
+        
+            <div class="progress-table">
+            <div class="progress-table">
+            <div class="table-head thead-dark" style="background-color:#93b5e2;">
+                <div class="serial">#</div>
+                <div class="country">Order Status</div>
+                <div class="visit">Total Price</div>
+                <div class="visit">Payment Mode</div>
+                <div class="visit">Order Date</div>
+                
+            </div>
+            {% for order in orders %}
+            <a class="table-row table-order" style="border-bottom:1px solid grey; cursor:pointer; color:black;" href="{% url 'order-details' order.id %}">
+                
+                <div class="serial">{{order.id}}</div>
+                <div class="country">{{order.status}}</div>
+                <div class="visit">{{order.total_price}}</div>
+                <div class="visit">{{order.payment.payment_mode}}</div>
+                <div class="visit">{{order.created_at}}</div>
+               
+            </a>
+            {% endfor %}
+        </div>
+        </div>
+        
+        </div>
+        {% else %}
+        <h1 class="mb-20 ml-200 mt-100">NO ORDERS</h1>
+        {% endif %}
+    </div>
+</div>
+</div>
+</main>
+
+{% endblock %}

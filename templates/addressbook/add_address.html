@@ -1,0 +1,85 @@
+{% extends 'user/base.html' %}
+{% block content %}
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-3" style="width: 300px;">
+            {% include 'user/user_sidebar.html' %}
+        </div>
+    
+        <div class="col-lg-6">
+            <h3 class="mb-5">Add Address</h3>
+                {% if msg %}
+                <p class="text-success">{{msg}}</p>
+                {% endif %}
+                  <form class="row contact_form" action="" method="post">
+                    {% csrf_token %}
+                    <div class="col-md-6 form-group p_star">
+                      {{form.email}}
+                      {% if form.errors.email %}
+                                    <label class="text-danger">{{form.errors.email}}</label>
+                      {% endif %}
+                    </div>
+                    <div class="col-md-6 form-group p_star">
+                      {{form.phone_number}}
+                      {% if form.errors.phone_number %}
+                                    <label class="text-danger">{{form.errors.phone_number}}</label>
+                      {% endif %}
+                    </div>
+                   
+                    <div class="col-md-6 form-group p_star">
+                     {{form.country}}
+                     {% if form.errors.country %}
+                                    <label class="text-danger">{{form.errors.country}}</label>
+                      {% endif %}
+                    </div>
+                    <div class="col-md-6 form-group p_star">
+                      {{form.state}}
+                      {% if form.errors.state %}
+                                    <label class="text-danger">{{form.errors.state}}</label>
+                      {% endif %}
+                    </div>
+                    
+                    <div class="col-md-12 form-group p_star">
+                      {{form.address}}
+                      {% if form.errors.address %}
+                                    <label class="text-danger">{{form.errors.address}}</label>
+                      {% endif %}
+                    </div>
+                    
+                    <div class="col-md-12 form-group p_star">
+                      {{form.district}}
+                      {% if form.errors.district %}
+                                    <label class="text-danger">{{form.errors.district}}</label>
+                      {% endif %}
+                    </div>
+                    <div class="col-md-12 form-group p_star">
+                      {{form.city}}
+                      {% if form.errors.city %}
+                                    <label class="text-danger">{{form.errors.city}}</label>
+                      {% endif %}
+                    </div>
+                   
+                    <div class="col-md-12 form-group">
+                      {{form.pincode}}
+                      {% if form.errors.pincode %}
+                                    <label class="text-danger">{{form.errors.pincode}}</label>
+                      {% endif %}
+                    </div>
+                    <div class="col-md-4 form-group d-flex align-items-center justify-content-center">
+                     
+                      {{form.status}}
+                      <label for="status-check"> Status</label>
+                      {% if form.errors.status %}
+                                    <label class="text-danger">{{form.errors.status}}</label>
+                      {% endif %}
+                    </div>
+                    <input type="submit" value="Add Address" class="btn_3 mt-3 mx-3">
+                </form>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

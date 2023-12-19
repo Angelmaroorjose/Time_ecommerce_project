@@ -1,0 +1,103 @@
+{% extends 'user/base.html' %}
+
+{% block content %}
+
+<div class="container mt-6 mb-7">
+    <div class="row justify-content-center">
+      <div class="col-lg-12 col-xl-7">
+        <div class="card">
+          <div class="card-body p-5">
+            <h2>
+              Hey {{request.user}},
+            </h2>
+            <p class="fs-sm">
+              This is the receipt for a payment of <strong>${{orders.get_order_total}}</strong> (USD) you made to Time Zone.
+            </p>
+
+            <div class="border-top border-gray-200 pt-4 mt-4">
+              <div class=" mb-2 border-bottom border-grey-200"><strong>Order Deatils</strong></div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="text-muted mb-2">Order Id : {{orders.id}}</div>
+                  <div class="text-muted mb-2">Order Total : {{orders.total_price}}</div>
+                  {% if discount %}
+                  <div class="text-muted mb-2">Order Discount : {{discount}}</div>
+                  {% endif %}
+                  
+                </div>
+                <div class="col-md-6 text-md-end">
+                  <div class="text-muted mb-2">Payment Date</div>
+                  <div class="text-muted mb-2">{{orders.created_at}}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="border-top border-gray-200 mt-4 py-4">
+              <div class=" mb-2 border-bottom border-grey-200"><strong>Address Deatils</strong></div>
+              <div class="row">
+
+                <div class="col-md-6">
+                  <div class="text-muted mb-2"></div>
+                  <strong>
+                    {{request.user}}
+                  </strong>
+                  <p class="fs-sm">
+                    {{orders.shipping_address.city}}, {{orders.shipping_address.district}}, {{orders.shipping_address.state}}, {{orders.shipping_address.country}},{{orders.shipping_address.pincode}}
+                    <br>
+                    <a href="#!" class="text-purple">john@email.com
+                    </a>
+                  </p>
+                </div>
+               
+              </div>
+            </div>
+
+            <div class="border-top border-grey mt-4 py-4">
+              <div class="mb-2"><strong>Product Deatils</strong></div>
+            <table class="table border-bottom border-gray-200 mt-3">
+              <thead>
+                <tr>
+                    
+                  <th style="max-width:30px;" scope="col" class="fs-sm text-dark text-uppercase-bold-sm px-0">Name</th>
+                  <th scope="col" class="fs-sm text-dark text-uppercase-bold-sm px-0">Price</th>
+                  <th scope="col" class="fs-sm text-dark text-uppercase-bold-sm px-0">Quantity</th>
+                  
+                  
+                  <th scope="col" class="fs-sm text-dark text-uppercase-bold-sm text-end px-0">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                <tr>
+                  <td style="max-width:30px" class="px-0">{{order_item.product.name}}</td>
+                  <td class="px-0">{{order_item.product.selling_price}}</td>
+                  <td class="px-0">{{order_item.quantity}}</td>
+                  <td class="text-end px-0">{{order_item.get_total}}</td>
+                </tr>
+                
+                
+              </tbody>
+            </table>
+
+            <div class="mt-5">
+              <div class="d-flex justify-content-end">
+                <p class="text-muted me-3">Subtotal:</p>
+                <span>${{order_item.get_total}}</span>
+              </div>
+              <div class="d-flex justify-content-end">
+                
+              </div>
+              <div class="d-flex justify-content-end mt-3">
+                <h5 class="me-3">Total:</h5>
+                <h5 class="text-success">${{order_item.get_total}}</h5>
+              </div>
+            </div>
+          </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

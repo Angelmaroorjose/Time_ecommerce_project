@@ -1,0 +1,56 @@
+{% extends 'custom_admin/base.html' %}
+
+{% block content %}
+
+
+{% include 'custom_admin/sidebar.html' %}
+
+
+<div class="container mt-5">
+    <div class="row ">
+        <div class="col-lg-8 mx-auto">
+    <div class="bg-secondary rounded h-100 p-4 ">
+        <h6 class="mb-4">Responsive Table</h6>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Offer Name</th>
+                        <th scope="col">Offer Model</th>
+                        <th scope="col">Offer Discount</th>
+                        <th scope="col">Offer Active</th>
+                        <th scope="col">Options</th>
+                        
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for offer in offers %}
+                    <tr>
+                        <th scope="row">{{offer.id}}</th>
+                        
+                        <td>{{offer.name}}</td>
+                        <td>{{offer.model}}</td>
+                        <td>{{offer.discount_amount}}</td>
+                        <td>{{offer.active}}</td>
+                        
+                        <td><a href=" {% url  'update_offer' offer.id  %}" class="btn btn-light">Update</a></td>
+                        <td><a href="{% url 'delete_offer' offer.id %}" class="btn btn-danger">Delete</a></td>
+                        
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+    <a href="add_offer" class="btn btn-primary">Add Offer</a>
+    </div>
+    </div>
+    
+    </div>
+
+
+{% endblock %}

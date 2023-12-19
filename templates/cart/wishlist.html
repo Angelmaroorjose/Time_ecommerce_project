@@ -1,0 +1,82 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block content %}
+<main>
+    <!-- Hero Area Start-->
+    <div class="slider-area ">
+        <div class="single-slider slider-height2 d-flex align-items-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center">
+                            <h2>WishList</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--================Cart Area =================-->
+    <section class="cart_area section_padding">
+      <div class="container">
+        <div class="cart_inner wishlist-data">
+          <div id="cart-div-change" class="table-responsive">
+            <table class="table">
+                {% if items %}
+              <thead>
+                <tr>
+                  <th scope="col">Product</th>
+                  <th scope="col">Price</th>
+                  <th scope="col" >View</th>
+                  <th class="ml-3" scope="col" >Options</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                
+                {% for item in items %}
+                <tr class="product_data">
+                    <td>
+                      <div class="media">
+                        <div class="d-flex">
+                          <img src="{{item.product.product_image.url}}" alt="" />
+                        </div>
+                        <div class="media-body">
+                          <p>{{item.product.name}}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <h5>{{item.product.selling_price|floatformat:2}}</h5>
+                    </td>
+                    <td>
+                        {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{item.product.id}}" class="prod_id" >
+                            <a href="{% url 'product_detail' item.product.slug %}" class="btn_3" style="background-color: blue;color:white;">View Item</a>
+                    </td>
+                    <td>
+                        
+                        <button class="btn btn-primary mb-3 delete-wishlist-item">Remove</button>
+                        <button value="{{item.product.id}}" style="background-color: blue;color:white;" class="add-cart  btn_3">Add to Cart</button>
+                    </td>
+                    
+                  </tr>
+                {% endfor %}
+                {% else %}
+                <h2 class="text-center">Your wishlist is Empty</h2>
+                {% endif %}
+                
+                
+                
+              </tbody>
+            </table>
+            
+          </div>
+        </div>
+    </section>
+    <!--================End Cart Area =================-->
+</main>
+
+
+
+{% endblock %}

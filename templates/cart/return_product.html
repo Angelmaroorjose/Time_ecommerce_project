@@ -1,0 +1,63 @@
+{% extends 'user/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <h3 class="mb-30">Form Element</h3>
+            <table class="table">
+                <thead>
+                  
+                  <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col" >Quantity</th>
+                    
+                    <th scope="col">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                
+                    <tr>
+                      
+                      <td style="vertical-align:middle;" class="w-25">
+                          <img src="{{order_item.product.product_image.url}}" class="img-fluid img-thumbnail">
+                      </td>
+                      <td style="vertical-align:middle;">{{order_item.product.name}}</td>
+                      <td style="vertical-align:middle;">{{order_item.product.selling_price}}</td>
+                      <td style="vertical-align:middle;">{{order_item.quantity}}</td>
+                      <td style="vertical-align:middle;">{{order_item.get_total}}</td>
+                     
+                        
+                    </tr>
+                    
+      
+                  
+                     <tr>
+                     
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      
+                    
+                     </tr>
+                     
+                  </tbody>
+              </table>
+            <form method = "post">
+                <div class="input-group-icon mt-10">
+                    {% csrf_token %}
+                    <h3>Reason For Cancellation</h3>
+                    {{form.reason}}
+                    <button class="btn_3 mt-2" type="submit">Return</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+    
+<div>
+
+{% endblock %}

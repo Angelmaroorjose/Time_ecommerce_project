@@ -1,0 +1,70 @@
+{% extends 'custom_admin/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-8 mt-5">
+            <h3 class="mb-30">Order Details</h3>
+            <form method = "post" action="{% url 'sales_report_pdf' %}">
+                {% csrf_token %}
+            <label for="starting-time">Choose the start date:</label>
+            <input type="datetime-local" id="starting-time" name="start_date">
+            
+            <label for="ending-time">Choose the end date:</label>
+            <input type="datetime-local" id="ending-time" name="end_date" >
+            
+            <input type = "submit" class="btn sales_submit">
+            <input class="btn btn-primary " type="submit" name="pdf_button" value="Download PDF">
+            <input class="btn btn-primary " type="submit" name="excel_button" value="Download Excel">
+            
+            </form>
+            
+        <table class="table table-image ordertable">
+            <thead class="thead-dark">
+              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Customer</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Payment Mode</th>
+                                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody class="order-sales">
+                {% for order in order_items %}
+              <tr>
+                <th scope="row">{{order.id}}</th>
+                <td>{{order.created_at}}</td>
+                <td>{{order.customer.username}}</td>
+                <td>{{order.total_price}}</td>
+                <td>{{order.payment.payment_mode}}</td>
+                <td>{{order.status}}</td>
+                
+              </tr>
+              {% endfor %}
+
+              {% if messages %}
+              {% for message in messages %}
+              <h3>{{message}}</h3>
+              {% endfor %}
+              {% endif %}
+               
+               
+            </tbody>
+            
+          </table> 
+          <h5  class="mb-30 ">TOTAL SALES : <strong class="totalAmount-sales-report">{{total_sales|floatformat:0}}</strong></h5>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+
+<script src = "{% static 'js/sales.js' %}"></script>
+{% endblock script %}

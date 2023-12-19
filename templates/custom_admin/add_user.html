@@ -1,0 +1,53 @@
+{% extends 'custom_admin/base.html' %}
+
+
+{% block content %}
+
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="col-md-12 form-group p_star">
+        {{form.username}}
+        {% if form.errors.username %}
+        <label class="text-danger">{{form.errors.username}}</label>
+        {% endif %}
+
+    </div>
+    <div class="col-md-12 form-group p_star">
+        {{form.email}}
+        {% if form.errors.email %}
+        <label class="text-danger">{{form.errors.email}}</label>
+        {% endif %}
+    </div>
+    <div class="col-md-12 form-group p_star">
+        {{form.phone_number}}
+        {% if form.errors.phone_number %}
+        <label class="text-danger">{{form.errors.phone_number}}</label>
+        {% endif %}
+    </div>
+    <div class="col-md-12 form-group p_star">
+        {{form.password1}}
+        {% if form.errors.password1 %}
+        <label class="text-danger">{{form.errors.password1}}</label>
+        {% endif %}
+    </div>
+    <div class="col-md-12 form-group p_star">
+        {{form.password2}}
+        {% if form.errors.password2 %}
+        <label class="text-danger">{{form.errors.password2}}</label>
+        {% endif %}
+    </div>
+    
+    <div class="col-md-12 form-group">
+      
+        <button type="submit" value="submit" class="btn btn-primary">
+            Add User
+        </button>
+        
+        
+    </div>
+    
+    </form>
+
+{% endblock %}
